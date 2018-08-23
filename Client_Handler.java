@@ -20,23 +20,27 @@ public class Client_Handler {
 	
 	
 	public Client_Handler() throws UnknownHostException, IOException {
-		
+		System.out.println("I am in client handler");
 		socket = new Socket("127.0.0.1",1000);
 		outToServer = socket.getOutputStream();
 		outQuestion = new DataOutputStream(outToServer);
+		
 		
 		inFromServer = socket.getInputStream();
 		inAnswer = new DataInputStream(inFromServer);
 	}
 
-	public void setClientQuestion(String cq) throws IOException {
-		outQuestion.writeChars(cq);
-		getServerAnswer(); 
+	public void setClientQuestion(String cq) {
+		try {
+			outQuestion.writeUTF(cq);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getServerAnswer() throws IOException {
-		String answer = inAnswer.readUTF();
-		System.out.println(answer);
-		return answer;
+		
+		return  inAnswer.readUTF();
+		 
 	}
 }

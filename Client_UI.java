@@ -24,28 +24,31 @@ public class Client_UI {
 		initialize();
 		activateComponents();
 		
-		clientHandler = new Client_Handler();
+		//clientHandler = new Client_Handler();
 	}
 	
 	private void initialize() {	
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 331);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		textFieldClientOutput = new JTextField();
+		textFieldClientOutput.setEnabled(true);
+		textFieldClientOutput.setEditable(false);
+		textFieldClientOutput.setText("Output");
+		textFieldClientOutput.setBounds(12, 13, 408, 100);
+		frame.getContentPane().add(textFieldClientOutput);
+		textFieldClientOutput.setColumns(10);
+		
 		textFieldClientInput = new JTextField();
-		textFieldClientInput.setText("hello from client");
-		textFieldClientInput.setBounds(12, 13, 408, 100);
+		textFieldClientInput.setText("square 2");
+		textFieldClientInput.setBounds(12, 127, 408, 100);
 		frame.getContentPane().add(textFieldClientInput);
 		textFieldClientInput.setColumns(10);
 		
-		textFieldClientOutput = new JTextField();
-		textFieldClientOutput.setEnabled(false);
-		textFieldClientOutput.setEditable(false);
-		textFieldClientOutput.setText("Output");
-		textFieldClientOutput.setBounds(12, 127, 408, 100);
-		frame.getContentPane().add(textFieldClientOutput);
-		textFieldClientOutput.setColumns(10);
+
 		
 		btnClientSubmit = new JButton("Submit");
 		btnClientSubmit.setBounds(34, 246, 97, 25);
@@ -69,9 +72,11 @@ public class Client_UI {
 	}
 
 	public void submitButtonClicked() throws IOException {
-		String clientQuestion = textFieldClientInput.getText();
 		
+		String clientQuestion = textFieldClientInput.getText();
+		clientHandler = new Client_Handler();
 		clientHandler.setClientQuestion(clientQuestion);
+		textFieldClientOutput.setText(clientHandler.getServerAnswer());
 		
 	}
 

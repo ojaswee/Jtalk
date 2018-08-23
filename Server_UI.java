@@ -16,16 +16,13 @@ public class Server_UI {
 	public Server_UI() throws IOException {
 		initialize();
 		activateComponents();
-		
-		serverHandler = new Server_Handler();
 	}
 	
-	private void initialize() {	
+	private void initialize() throws IOException {	
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 331);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
 		
 		textFieldClientOutput = new JTextField();
 		textFieldClientOutput.setEnabled(true);
@@ -34,11 +31,9 @@ public class Server_UI {
 		textFieldClientOutput.setBounds(12, 127, 408, 100);
 		frame.getContentPane().add(textFieldClientOutput);
 		textFieldClientOutput.setColumns(10);
-		
-		
-	}
-	private void activateComponents() {
 
-		
+	}
+	private void activateComponents() throws IOException {
+		serverHandler = new Server_Handler();
 	}
 }

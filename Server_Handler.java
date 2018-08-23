@@ -19,31 +19,39 @@ public class Server_Handler {
 		OutputStream outToClient;
 		DataOutputStream outAnswer;
 		
+		Server_Brain server_ai;
+		
 
 	   
 	   public Server_Handler() throws IOException {
 	      serverSocket = new ServerSocket(1000);
-	      socket = serverSocket.accept();
 	      
-	      inFromClient = socket.getInputStream();
-	      inQuestion = new DataInputStream(inFromClient);
-	      
-	      
-	      outToClient = socket.getOutputStream();
-	      outAnswer = new DataOutputStream(outToClient);
+	      socket = null;
+	      server_ai = new Server_Brain();
+	   
 	      
 	      checkQuestion();
+		   
+		  socket.close();
+		  serverSocket.close();
 	   }
 
 	   public void checkQuestion() throws IOException {
 		   
 		   while(true) {
-			   System.out.println("inside checkquestion");
-			   System.out.println(inQuestion.readUTF());
-			   outAnswer.writeChars("hello from server");
-		   }
+			   
+			   socket = serverSocket.accept();
+			      
+			   inFromClient = socket.getInputStream();
+			   inQuestion = new DataInputStream(inFromClient);
+			      
+			      
+			   outToClient = socket.getOutputStream();
+	           outAnswer = new DataOutputStream(outToClient);
+			  
+			   outAnswer.writeUTF(server_ai.processQuestion(inQuestion.readUTF()));
 		  
-		   
+		   }
 	   }
 	           
 }
