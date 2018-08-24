@@ -57,7 +57,6 @@ public class Client_UI {
 	}
 	private void activateComponents() {
 
-		
 		btnClientSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

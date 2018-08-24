@@ -1,5 +1,6 @@
 package Server;
 
+import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server_Handler {
+public class Server_Handler extends Thread{
 	
 	    ServerSocket serverSocket;
 		Socket socket;
@@ -21,7 +22,7 @@ public class Server_Handler {
 		
 		Server_Brain server_ai;
 		
-
+		String output;
 	   
 	   public Server_Handler() throws IOException {
 	      serverSocket = new ServerSocket(1000);
@@ -29,29 +30,48 @@ public class Server_Handler {
 	      socket = null;
 	      server_ai = new Server_Brain();
 	   
-	      
-	      checkQuestion();
-		   
-		  socket.close();
-		  serverSocket.close();
 	   }
 
-	   public void checkQuestion() throws IOException {
+	   public void run() {
 		   
 		   while(true) {
 			   
-			   socket = serverSocket.accept();
+			   try {
+				socket = serverSocket.accept();
+				inFromClient = socket.getInputStream();
+				inQuestion = new DataInputStream(inFromClient);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			      
-			   inFromClient = socket.getInputStream();
-			   inQuestion = new DataInputStream(inFromClient);
-			      
-			      
-			   outToClient = socket.getOutputStream();
-	           outAnswer = new DataOutputStream(outToClient);
+			   try {
+				outToClient = socket.getOutputStream();
+				outAnswer = new DataOutputStream(outToClient);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	           
 			  
-			   outAnswer.writeUTF(server_ai.processQuestion(inQuestion.readUTF()));
+			   try {
+				output = server_ai.processQuestion(inQuestion.readUTF());
+				System.out.printf("Answer is %s \n",output );
+				outAnswer.writeUTF(output);
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		  
 		   }
 	   }
+	   
+	public String getAnswer() throws IOException {
+		return output;
+	}
 	           
 }

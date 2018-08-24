@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class Client_Handler {
 	
@@ -20,7 +19,7 @@ public class Client_Handler {
 	
 	
 	public Client_Handler() throws UnknownHostException, IOException {
-		System.out.println("I am in client handler");
+		System.out.println("Client handler running");
 		socket = new Socket("127.0.0.1",1000);
 		outToServer = socket.getOutputStream();
 		outQuestion = new DataOutputStream(outToServer);

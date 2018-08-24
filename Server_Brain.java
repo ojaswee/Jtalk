@@ -23,7 +23,8 @@ public class Server_Brain {
 			
 			answer=Integer.toString(calThree(Integer.parseInt(line[0]),line[1],Integer.parseInt(line[2])));
 		}
-
+		else 
+			answer= "Invalid question";
 		return answer;
 	}
 	
