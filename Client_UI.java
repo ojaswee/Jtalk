@@ -29,7 +29,7 @@ public class Client_UI {
 	
 	private void initialize() {	
 		
-		frame = new JFrame();
+		frame = new JFrame("Client");
 		frame.setBounds(100, 100, 450, 331);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);

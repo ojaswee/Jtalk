@@ -16,15 +16,21 @@ public class Server_Handler extends Thread{
 		
 		InputStream inFromClient; 
 		DataInputStream inQuestion; 
+		String question;
 		
 		OutputStream outToClient;
 		DataOutputStream outAnswer;
 		
 		Server_Brain server_ai;
 		
-		String output;
+		Server_UI parent;
+		
+		 public Server_Handler()  {
+		   
+		   }
 	   
-	   public Server_Handler() throws IOException {
+	   public Server_Handler(Server_UI parent) throws IOException {
+		  this.parent=parent;
 	      serverSocket = new ServerSocket(1000);
 	      
 	      socket = null;
@@ -57,9 +63,10 @@ public class Server_Handler extends Thread{
 	           
 			  
 			   try {
-				output = server_ai.processQuestion(inQuestion.readUTF());
-				System.out.printf("Answer is %s \n",output );
+				question = inQuestion.readUTF();
+				String output = server_ai.processQuestion(question);
 				outAnswer.writeUTF(output);
+				parent.textFieldServer.setText(parent.textFieldServer.getText() + "\r\n"+ "Question: "+question +"  Answer: "+output);
 				
 				
 			} catch (IOException e) {
@@ -69,9 +76,5 @@ public class Server_Handler extends Thread{
 		  
 		   }
 	   }
-	   
-	public String getAnswer() throws IOException {
-		return output;
-	}
 	           
 }
